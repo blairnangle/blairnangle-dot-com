@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/blairnangle
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://blairnangle.com
+  * I am blairnangle (https://keybase.io/blairnangle) on keybase.
+  * I have a public key ASBew3Xir-NunF7IXu3GRmnBAEjbQoVwh8lpsebklBVHVgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01205ec375e2afe36e9c5ec85eedc64669c10048db42857087c969b1e6e4941547560a",
+      "host": "keybase.io",
+      "kid": "01205ec375e2afe36e9c5ec85eedc64669c10048db42857087c969b1e6e4941547560a",
+      "uid": "1135b934be8badbdfedc58d553126819",
+      "username": "blairnangle"
+    },
+    "merkle_root": {
+      "ctime": 1646055968,
+      "hash": "0e2e348e506d069c08b27da6fe512b99e196b079a2387687d459a017b5e1a8ce275b76c7eb59e15795e5cc101741678899594abe3cb387987a118804c39adb58",
+      "hash_meta": "3f75abbd8552917f2bb79cab567b95ba3efa935e08cece9d331be2da9ae4579c",
+      "seqno": 21973204
+    },
+    "service": {
+      "entropy": "/Dlr6NQ4GjcnjGN1sXEdW0Gw",
+      "hostname": "blairnangle.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.9.2"
+  },
+  "ctime": 1646055999,
+  "expire_in": 504576000,
+  "prev": "e9bb320f1dff7fb904ba458cc90119754897adeb03359a6adae2d9469dd4e3c9",
+  "seqno": 62,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgXsN14q/jbpxeyF7txkZpwQBI20KFcIfJabHm5JQVR1YKp3BheWxvYWTESpcCPsQg6bsyDx3/f7kEukWMyQEZdUiXresDNZpq2uLZRp3U48nEICRg+DAkOM0R2IYGPnCA27u2EpiVA8aGwNCYbQW+cKBMAgHCo3NpZ8RA8kl0wuTNjKizp0CmeQFLJSLh2QHdwymz7xm10fDoDCAO1lJ1T/s05F9yamQOvK8aU+Ymy2ULHJMjis9F5o5eC6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIJU6JvG/+5OA8wENM+Y6hQYNnajp/1xstR19MjW7MLRIo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/blairnangle
+
+==================================================================
