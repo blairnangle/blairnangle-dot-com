@@ -10,6 +10,15 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: 'gatsby-plugin-manifest',
+            options: {
+              name: 'Blair Nangle',
+              short_name: 'Blair Nangle',
+              start_url: '/',
+              icon: 'static/favicon.ico',
+            },
+          },
+          {
             resolve: 'gatsby-remark-autolink-headers',
           },
           {
