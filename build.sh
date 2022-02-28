@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gatsby build
+npm exec gatsby build
