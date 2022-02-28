@@ -6,12 +6,6 @@ on:
     types: [ completed ]
     branches: [ main ]
 
-env:
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: eu-west-2
-  CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-
 jobs:
   build-and-deploy:
     name: Build and deploy
@@ -38,4 +32,4 @@ jobs:
           aws-region: eu-west-2
 
       - name: Deploy
-        run: ./deploy.sh "${CLOUDFRONT_DISTRIBUTION_ID}"
+        run: ./deploy.sh ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}

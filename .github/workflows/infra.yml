@@ -6,9 +6,6 @@ on:
 
 env:
   INFRA_DIRECTORY: infra
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: eu-west-2
   TF_VAR_zoho_email_txt_verification_record_value: ${{ secrets.ZOHO_EMAIL_TXT_VERIFICATION_RECORD_VALUE }}
   TF_VAR_keybase_txt_verification_record_value: ${{ secrets.KEYBASE_TXT_VERIFICATION_RECORD_VALUE }}
 
