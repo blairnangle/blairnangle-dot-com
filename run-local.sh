@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gatsby develop

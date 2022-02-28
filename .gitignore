@@ -1,0 +1,20 @@
+# IntelliJ
+.idea
+
+# Dependencies
+node_modules
+
+# Transpiled files
+public
+
+# Cached transpiled files
+.cache
+
+# Built files
+build
+
+# Terraform
+.terraform
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
