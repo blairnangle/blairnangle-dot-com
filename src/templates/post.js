@@ -24,6 +24,7 @@ function PostTemplate({ data }) {
         <Helmet>
           <title>
             Blair Nangle |
+            {' '}
             {frontmatter.title}
           </title>
         </Helmet>

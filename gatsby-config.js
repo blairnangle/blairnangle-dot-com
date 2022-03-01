@@ -10,6 +10,14 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 400,
+              quality: 100,
+              withWebp: true,
+            },
+          },
+          {
             resolve: 'gatsby-plugin-manifest',
             options: {
               name: 'Blair Nangle',
@@ -74,7 +82,11 @@ module.exports = {
           { resolve: 'gatsby-remark-autolink-headers' },
           { resolve: 'gatsby-remark-prismjs', options: {} },
           { resolve: 'gatsby-remark-smartypants' },
+          {
+            resolve: 'gatsby-remark-images',
+          },
         ],
+        plugins: ['gatsby-remark-images', 'gatsby-plugin-sharp'],
       },
     },
     {
