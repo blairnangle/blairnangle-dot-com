@@ -22,7 +22,8 @@ I wanted to conditionally change the relative positions of a list of image-capti
 
 ## Problem
 
-Due to [Gatsby's server-side rendering](#gatsby-ssr) mechanism, standard methods for determining a user's device type in JavaScript were suboptimal for the static site I was building.
+Ordinarily when working with conditional rendering in React, I would just use JavaScript to detect the relevant user-specific state and then have some logic to return a modified or completely different component. However, due to
+[Gatsby's static server-side rendering](#gatsbys-static-server-side-rendering) mechanism, standard methods for determining a user's device type in JavaScript were suboptimal for the static site I was building.
 
 ## Solution
 
@@ -171,11 +172,11 @@ const CaptionedImageStyles = styled.header`
 viewport widths and layouts). The *clever* parts are changing the `flex-direction` for mobile compared to desktop and using `order` to override the relative positions of `div` and `img` elements within the `captioned-image` CSS class. Notice the different
 values for `order` for smaller screen sizes—we always want the caption to come after the image, regardless of the order of elements within the `div`.
 
-The slightly unusual CSS syntax (e.g., `.image.image1`) is making use of [inheritance](#css-inheritance) to reduce code duplication.
+The slightly unusual CSS syntax (e.g., `.image.image1`) is making use of [CSS inheritance](#css-inheritance) to reduce code duplication.
 
 ## Notes
 
-### <a name="gatsby-ssr"></a> Gatsby's static server-side rendering
+### Gatsby's static server-side rendering
 
 Unless configured to use server-side rendering or delayed static site generation (which are both more appropriate for large/media-heavy sites and only [available since Gatsby v4](https://www.gatsbyjs.com/gatsby-4/)), Gatsby generates the entire HTML for the
 site at build-time. Note that the Gatsby project uses the term "server-side rendering" (SSR) to refer to dynamic sever-side rendering—i.e., HTML that is only created on request from the client. New Gatsby 4 features aside, Gatsby creates the HTML for all pages
@@ -191,7 +192,7 @@ can manifest as a flash or the wrong content/layout being shown initially for th
 For situations where an additional render is required, Josh has an [elegant solution](https://www.joshwcomeau.com/react/the-perils-of-rehydration/#the-solution). And [Ferran Buireu](https://twitter.com/fbuireu) has a
 [nice workaround](https://stackoverflow.com/a/65166867/4304123), specifically for navigation bars.
 
-### <a name="css-inheritance"></a> CSS inheritance
+### CSS inheritance
 
 It is possible to combine properties from child and parent CSS classes to style an element:
 
