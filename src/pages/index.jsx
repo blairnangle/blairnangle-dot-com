@@ -37,7 +37,7 @@ function Index() {
     return photoCaptionMap[keys[keys.length * Math.random() << 0]];
   };
 
-  const [homePhoto, setHomePhoto] = useState(photoCaptionMap.one);
+  const [homePhoto, setHomePhoto] = useState(randomPhoto());
 
   useEffect(() => {
     setHomePhoto(randomPhoto());
