@@ -1,0 +1,46 @@
+---
+title: "String-enclosed Secrets in GitHub Actions"
+date: "2022-05-11"
+publish: true
+excerpt: "Improve email deliverability by adding SPF and DKIM DNS records to my domain via Terraform and GitHub Actions."
+---
+
+#
+
+[Just show me the code (without the actual secret values, obviously)](https://github.com/blairnangle/https://github.com/blairnangle/blairnangle-dot-com).
+
+## Goal
+
+Improve email deliverability by adding SPF and DKIM DNS records to my domain via Terraform and GitHub Actions.
+
+## Problem
+
+DPF and DKIM values are composed of whitespace. For example, my SPF value might be:
+
+```shell
+v=spf1 include:zoho.eu ~all
+```
+
+Route 53 expects each of the TXT record values to be double-quoted. If we were to manually add the value to the TXT record via the AWS Console, the quotes would be automagically added.
+
+When injecting the secret value into the Actions environment, double-quoted (e.g., `"v=spf1 include:zoho.eu ~all"`) and escape/double-quoted or double/escape-quoted values (e.g., `\""v=spf1 include:zoho.eu ~all"\"` or `"\"v=spf1 include:zoho.eu ~all\""`) appear to have their quotes discarded, leading the AWS API (via Terraform) to respond with a `400` and the following error:
+
+```shell
+Error: [ERR]: Error building changeset: InvalidChangeBatch: [Invalid Resource Record: 'FATAL problem: InvalidCharacterString (Value should be enclosed in quotation marks) encountered with '"***"'']
+```
+
+And escape-quoted values (e.g., `\"v=spf1 include:zoho.eu ~all\"`)   somehow achieve this strange result in Route 53:
+
+```shell
+"\"v=spf1 include:zoho.eu ~all\""
+```
+
+## Solution
+
+We can single-quote the value of the secret. For example:
+
+```shell
+'v=spf1 include:zoho.eu ~all'
+```
+
+Super simple, but unintuitive. Took me a while to figure out after playing around with various quote combinations!
