@@ -41,6 +41,12 @@ module.exports = {
               ignoreFileExtensions: [],
             },
           },
+          {
+            resolve: 'gatsby-plugin-disqus',
+            options: {
+              shortname: 'blairnangle-dot-com',
+            },
+          },
         ],
       },
     },

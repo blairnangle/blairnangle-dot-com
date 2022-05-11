@@ -3,6 +3,7 @@ import { graphql } from 'gatsby';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { Disqus } from 'gatsby-plugin-disqus';
 
 import Layout from '../components/Layout';
 
@@ -44,6 +45,13 @@ function PostTemplate({ data }) {
       <h1>{frontmatter.title}</h1>
       <MDXRenderer>{body}</MDXRenderer>
       <StyledPostDate>{frontmatter.date}</StyledPostDate>
+      <Disqus
+        config={{
+          url: typeof window !== 'undefined' ? window.location.href : '',
+          identifier: frontmatter.title,
+          title: frontmatter.title,
+        }}
+      />
     </Layout>
   );
 }
