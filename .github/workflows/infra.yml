@@ -41,10 +41,10 @@ jobs:
         id: validate
         run: terraform validate
 
-      - name: Terraform plan
+      - name: Terraform Plan
         id: plan
         run: terraform plan -out=tfplan -input=false
 
-      - name: Terraform apply
+      - name: Terraform Apply
         id: apply
         run: terraform apply -input=false -auto-approve tfplan
