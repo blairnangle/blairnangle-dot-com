@@ -3,7 +3,7 @@ variable "domain" {
   description = "The domain name for the website"
 }
 
-variable "ZOHO_EMAIL_TXT_VERIFICATION_RECORD_VALUE" {}
-variable "ZOHO_SPF_TXT_VERIFICATION_RECORD_VALUE" {}
-variable "ZOHO_DKIM_TXT_VERIFICATION_RECORD_VALUE" {}
-variable "KEYBASE_TXT_VERIFICATION_RECORD_VALUE" {}
+variable "zoho_email_txt_verification_record_value" {}
+variable "zoho_spf_txt_verification_record_value" {}
+variable "zoho_dkim_txt_verification_record_value" {}
+variable "keybase_txt_verification_record_value" {}

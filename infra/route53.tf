@@ -51,9 +51,9 @@ resource "aws_route53_record" "txt_verification" {
   zone_id = aws_route53_zone.blairnangle_dot_com.id
   ttl     = 300
   records = [
-    var.ZOHO_EMAIL_TXT_VERIFICATION_RECORD_VALUE,
-    var.ZOHO_SPF_TXT_VERIFICATION_RECORD_VALUE,
-    var.KEYBASE_TXT_VERIFICATION_RECORD_VALUE
+    var.zoho_email_txt_verification_record_value,
+    var.zoho_spf_txt_verification_record_value,
+    var.keybase_txt_verification_record_value
   ]
 }
 
@@ -63,6 +63,6 @@ resource "aws_route53_record" "domain_keys_identified_mail" {
   zone_id = aws_route53_zone.blairnangle_dot_com.id
   ttl     = 300
   records = [
-    var.ZOHO_DKIM_TXT_VERIFICATION_RECORD_VALUE
+    var.zoho_dkim_txt_verification_record_value
   ]
 }
