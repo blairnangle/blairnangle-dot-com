@@ -13,6 +13,11 @@ const elsewhere = () => (
       <p>
         •
         {' '}
+        <XA href="https://www.kaggle.com/blairnangle">Kaggle</XA>
+      </p>
+      <p>
+        •
+        {' '}
         <XA href="https://keybase.io/blairnangle">Keybase</XA>
       </p>
       <p>
