@@ -9,6 +9,8 @@ import amaDablam from '../../static/images/home/ama-dablam.jpg';
 import amaDablamZoom from '../../static/images/home/ama-dablam-zoom.jpg';
 import aNiceGoat from '../../static/images/home/a-nice-goat.jpg';
 import aNiceGoatZoom from '../../static/images/home/a-nice-goat-zoom.jpg';
+import matera from '../../static/images/home/matera.jpg';
+import materaZoom from '../../static/images/home/matera-zoom.jpg';
 
 function Index() {
   const photoCaptionMap = {
@@ -30,6 +32,12 @@ function Index() {
               zoomSrc: aNiceGoatZoom,
               caption: 'A nice goat, Russia. July, 2018.',
             },
+    four:
+          {
+            src: matera,
+            zoomSrc: materaZoom,
+            caption: 'Matera, Basilicata. September, 2022.',
+          },
   };
 
   const randomPhoto = () => {
