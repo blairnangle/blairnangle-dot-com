@@ -40,6 +40,8 @@ function Index() {
           },
   };
 
+  const [hasMounted, setHasMounted] = useState(false);
+
   const randomPhoto = () => {
     const keys = Object.keys(photoCaptionMap);
     return photoCaptionMap[keys[keys.length * Math.random() << 0]];
@@ -48,11 +50,16 @@ function Index() {
   const [homePhoto, setHomePhoto] = useState(photoCaptionMap.one);
 
   useEffect(() => {
+    setHasMounted(true);
     setHomePhoto(randomPhoto());
   }, []);
 
   const photo = randomPhoto();
-  console.log(photo);
+
+  if (!hasMounted) {
+    return null;
+  }
+
   return (
     <Layout>
       <div className="home-image">
