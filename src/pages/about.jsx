@@ -8,7 +8,7 @@ const about = () => (
       <p>
         I write software at
         {' '}
-        <XA href="https://sapienhealth.io">Sapien Health</XA>
+        <XA href="https://surgeryhero.com">Surgery Hero</XA>
         .
       </p>
     </div>
