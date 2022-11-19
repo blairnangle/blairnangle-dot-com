@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: black;
+    color: blue;
     border-bottom: 2px solid transparent;
 
     &:hover {
