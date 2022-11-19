@@ -60,7 +60,6 @@ export const query = graphql`
             title
             date
             excerpt
-            blog
           }
           fields {
             slug
