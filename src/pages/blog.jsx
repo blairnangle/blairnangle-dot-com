@@ -28,8 +28,14 @@ export const query = graphql`
   query {
     allMdx(
       filter: {
-        frontmatter: { publish: { eq: true } }
-        fields: { type: { eq: "post" } }
+        frontmatter: {
+          publish: {
+            eq: true
+           },
+          postType: {
+            eq: "blog"
+          }
+        }
       }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
