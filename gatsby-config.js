@@ -1,4 +1,5 @@
 module.exports = {
+  trailingSlash: 'never',
   plugins: [
     {
       resolve: 'gatsby-plugin-styled-components',
@@ -76,7 +77,6 @@ module.exports = {
         trackingId: 'UA-124521773-1',
       },
     },
-    'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-mdx',
       options: {

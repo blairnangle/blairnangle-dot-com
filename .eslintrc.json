@@ -19,6 +19,7 @@
     "spellcheck"
   ],
   "rules": {
+    "no-console": "off",
     "spellcheck/spell-checker": [
       2,
       {
@@ -37,7 +38,19 @@
           "dablam",
           "gatsby",
           "matera",
-          "basilicata"
+          "basilicata",
+          "mdx",
+          "frontmatter",
+          "disqus",
+          "nprogress",
+          "autolink",
+          "plugins",
+          "webp",
+          "prismjs",
+          "smartypants",
+          "shortname",
+          "blairnangle",
+          "webpack"
         ]
       }
     ]
