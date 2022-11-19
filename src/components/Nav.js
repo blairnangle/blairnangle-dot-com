@@ -97,6 +97,11 @@ function Nav() {
           </NavItem>
         </ListElement>
         <ListElement>
+          <NavItem to="/generative" activeClassName={activeClassName}>
+            generative
+          </NavItem>
+        </ListElement>
+        <ListElement>
           <NavItem to="/contact" activeClassName={activeClassName}>
             contact
           </NavItem>
