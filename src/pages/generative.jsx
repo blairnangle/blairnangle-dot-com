@@ -1,6 +1,5 @@
 import React from 'react';
-import { graphql, Link } from 'gatsby';
-
+import { graphql } from 'gatsby';
 import Layout from '../components/Layout';
 import BlogListing from '../components/BlogListing';
 import XA from '../components/ExternalAnchor';
@@ -20,14 +19,16 @@ function GenerativePage(props) {
     <Layout>
       <div>
         <p>
-          Experiments with generative AI. Something to do with posterity. Or, more likely, a
+          Experiments with generative AI. Prompt engineering.
+          Something to do with posterity. Or, more likely, just a
           {' '}
           <XA href="https://store.waitbutwhy.com/collections/posters/products/dark-playground-poster-18x24">dark playground</XA>
           {' '}
           to keep me from doing actual ML work.
         </p>
         <p>
-          The posts wear content from various large language models (prompts: author&apos;s own), etc.
+          The posts wear content from various large language models
+          (prompts: author&apos;s own), etc.
         </p>
       </div>
       <GenerativePageInner {...props} />
