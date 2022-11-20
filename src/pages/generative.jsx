@@ -22,7 +22,7 @@ function GenerativePage(props) {
           Experiments with generative AI. Prompt engineering.
           Something to do with posterity. Or, more likely, just a
           {' '}
-          <XA href="https://store.waitbutwhy.com/collections/posters/products/dark-playground-poster-18x24">dark playground</XA>
+          <XA href="https://waitbutwhy.com/2013/10/why-procrastinators-procrastinate.html">dark playground</XA>
           {' '}
           to keep me from doing actual ML work.
         </p>

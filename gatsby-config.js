@@ -61,8 +61,15 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
-        name: 'posts',
-        path: `${__dirname}/src/content/posts`,
+        name: 'blogPosts',
+        path: `${__dirname}/src/content/posts/blog`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'generativePosts',
+        path: `${__dirname}/src/content/posts/generative`,
       },
     },
     {

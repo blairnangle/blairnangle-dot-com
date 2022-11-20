@@ -35,9 +35,6 @@ const GlobalStyle = createGlobalStyle`
     max-width: 100%;
     width: 100%;
 
-    &.youtube {
-      height: 20rem;
-
       @media (min-width: 550px) {
         height: 34rem;
       }
@@ -81,10 +78,6 @@ const GlobalStyle = createGlobalStyle`
   p {
     line-height: 1.5em;
     font-size: 1.8rem;
-  }
-
-  twitterwidget {
-    margin: 0 auto;
   }
 
   .sidebar {

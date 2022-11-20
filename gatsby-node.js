@@ -10,7 +10,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
       let slug = '';
       switch (sourceInstanceName) {
-        case 'posts':
+        case 'blogPosts':
           slug = createFilePath({
             node,
             getNode,
@@ -20,6 +20,24 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
             node,
             name: 'slug',
             value: `/blog${slug}`,
+          });
+
+          createNodeField({
+            node,
+            name: 'type',
+            value: 'post',
+          });
+          break;
+        case 'generativePosts':
+          slug = createFilePath({
+            node,
+            getNode,
+          });
+
+          createNodeField({
+            node,
+            name: 'slug',
+            value: `/generative${slug}`,
           });
 
           createNodeField({
@@ -79,7 +97,7 @@ exports.createPages = ({ graphql, actions }) => {
       }
 
       result.data.allMdx.edges.forEach(({ node }) => {
-        const templatePath = './src/templates/post.js';
+        const templatePath = './src/templates/post.jsx';
 
         createPage({
           path: node.fields.slug,

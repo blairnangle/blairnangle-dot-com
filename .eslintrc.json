@@ -50,7 +50,21 @@
           "smartypants",
           "shortname",
           "blairnangle",
-          "webpack"
+          "webpack",
+          "xa",
+          "noopener",
+          "noreferrer",
+          "ico",
+          "og",
+          "blockquote",
+          "calc",
+          "feb",
+          "iframe",
+          "li",
+          "monospace",
+          "resp",
+          "ul",
+          "jsx"
         ]
       }
     ]
