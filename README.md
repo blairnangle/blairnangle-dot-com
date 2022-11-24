@@ -10,7 +10,7 @@ Personal website. Hosted on AWS S3 and CloudFront.
 
 ### Development mode
 
-To run the site is development mode with hot reloading:
+To run the site in development mode with hot reloading:
 
 ```shell
 ./run-local.sh
