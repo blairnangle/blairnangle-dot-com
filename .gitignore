@@ -18,6 +18,7 @@ build
 .terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
+*.tfvars
 
 # macOS metadata
 .DS_Store

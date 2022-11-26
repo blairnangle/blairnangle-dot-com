@@ -1,17 +1,10 @@
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
-    domain_name = aws_s3_bucket.static_hosting.website_endpoint
+    domain_name = aws_s3_bucket.static_hosting.bucket_regional_domain_name
     origin_id   = "S3-${var.domain}"
 
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols = [
-        "TLSv1",
-        "TLSv1.1",
-        "TLSv1.2"
-      ]
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
     }
   }
 
@@ -58,6 +51,8 @@ resource "aws_cloudfront_distribution" "cdn" {
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate_validation.cert_validation.certificate_arn
     ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.1_2016"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }
+
+resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {}
