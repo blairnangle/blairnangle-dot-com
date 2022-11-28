@@ -17,10 +17,6 @@ resource "aws_cloudfront_response_headers_policy" "headers" {
       preload                    = true
       override                   = true
     }
-    content_security_policy {
-      content_security_policy = "script-src 'self' 'unsafe-inline' 'unsafe-eval' cloudfront.net s3.amazonaws.com auth0.com"
-      override                = false
-    }
     content_type_options {
       override = false
     }
