@@ -6,6 +6,7 @@ on:
 
 env:
   INFRA_DIRECTORY: infra
+  TF_VAR_aws_account_number: ${{ secrets.AWS_ACCOUNT_NUMBER }}
   TF_VAR_zoho_email_txt_verification_record_value: ${{ secrets.ZOHO_EMAIL_TXT_VERIFICATION_RECORD_VALUE }}
   TF_VAR_zoho_spf_txt_verification_record_value: ${{ secrets.ZOHO_SPF_TXT_VERIFICATION_RECORD_VALUE }}
   TF_VAR_zoho_dkim_txt_verification_record_value: ${{ secrets.ZOHO_DKIM_TXT_VERIFICATION_RECORD_VALUE }}

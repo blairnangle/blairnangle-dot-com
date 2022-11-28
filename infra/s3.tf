@@ -15,6 +15,7 @@ resource "aws_s3_bucket_policy" "static_hosting_policy" {
   bucket = aws_s3_bucket.static_hosting.id
 
   policy = templatefile("${path.module}/templates/s3-policy.json", {
+    awsAccountNumber               = var.aws_account_number,
     bucket                         = var.domain,
     cloudFrontOriginAccessIdentity = aws_cloudfront_origin_access_identity.origin_access_identity.id
     }
