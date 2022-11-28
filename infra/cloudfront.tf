@@ -1,10 +1,17 @@
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
-    domain_name = aws_s3_bucket.static_hosting.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.static_hosting.website_endpoint
     origin_id   = "S3-${var.domain}"
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
+    custom_origin_config {
+      http_port              = "80"
+      https_port             = "443"
+      origin_protocol_policy = "http-only"
+      origin_ssl_protocols = [
+        "TLSv1",
+        "TLSv1.1",
+        "TLSv1.2"
+      ]
     }
   }
 
@@ -13,7 +20,8 @@ resource "aws_cloudfront_distribution" "cdn" {
   default_root_object = "index.html"
 
   aliases = [
-    var.domain
+    var.domain,
+    "www.${var.domain}"
   ]
 
   default_cache_behavior {
@@ -56,13 +64,24 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   custom_error_response {
+    error_code         = 400
+    response_code      = 400
+    response_page_path = "/index.html"
+  }
+
+  custom_error_response {
     error_code         = 403
-    response_code      = 200
+    response_code      = 403
+    response_page_path = "/index.html"
+  }
+
+  custom_error_response {
+    error_code         = 404
+    response_code      = 404
     response_page_path = "/index.html"
   }
 
   depends_on = [
-    aws_cloudfront_origin_access_identity.origin_access_identity,
     aws_route53_record.validation,
     aws_s3_bucket.static_hosting
   ]
@@ -73,5 +92,3 @@ resource "aws_cloudfront_distribution" "cdn" {
     include_cookies = true
   }
 }
-
-resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {}

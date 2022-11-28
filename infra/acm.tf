@@ -1,7 +1,8 @@
 resource "aws_acm_certificate" "cert" {
-  provider          = aws.acm_provider
-  domain_name       = var.domain
-  validation_method = "DNS"
+  provider                  = aws.acm_provider
+  domain_name               = var.domain
+  subject_alternative_names = local.cert_subject_alternative_names
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true

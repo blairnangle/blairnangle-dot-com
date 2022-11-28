@@ -2,22 +2,33 @@ resource "aws_s3_bucket" "static_hosting" {
   bucket = var.domain
 }
 
+resource "aws_s3_bucket_website_configuration" "static_hosting" {
+  bucket = aws_s3_bucket.static_hosting.bucket
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "error.html"
+  }
+}
+
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
   bucket = aws_s3_bucket.static_hosting.id
 
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
 }
 
 resource "aws_s3_bucket_policy" "static_hosting_policy" {
   bucket = aws_s3_bucket.static_hosting.id
 
   policy = templatefile("${path.module}/templates/s3-policy.json", {
-    awsAccountNumber               = var.aws_account_number,
-    bucket                         = var.domain,
-    cloudFrontOriginAccessIdentity = aws_cloudfront_origin_access_identity.origin_access_identity.id
+    awsAccountNumber = var.aws_account_number,
+    bucket           = var.domain
     }
   )
 }
