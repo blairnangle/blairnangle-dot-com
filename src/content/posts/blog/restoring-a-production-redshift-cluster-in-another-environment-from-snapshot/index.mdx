@@ -1,0 +1,222 @@
+---
+title: "Restoring a production Redshift cluster in another environment from snapshot"
+date: "2023-01-13"
+publish: true
+excerpt: "Come up with an easy way to replicate production Redshift data in another environment."
+postType: "blog"
+---
+
+#
+
+[Just show me the code](https://github.com/blairnangle/redshift-restore).
+
+## Goal
+
+Come up with an easy way to replicate production Redshift data in another environment.
+
+## Problem
+
+The *native* AWS solution involves a Redshift data share. Unfortunately this means being [restricted](https://docs.aws.amazon.com/redshift/latest/dg/considerations.html) to certain underlying EC2 instance classes for both the source and target cluster.
+
+## Solution
+
+**N.B.:** This is not a production-ready solution! Corners have been cut for concision. Choices such as management by inference of a VPC's default security group, skipping final snapshots and using local Terraform state are not considered *best practice*.
+
+### Overview
+
+- Create a "production" Redshift cluster and insert some data
+- Using a Python script that leverages `boto3`:
+- Take a manual snapshot of the production cluster
+- Wait for it to become ready
+- Authorise the staging AWS account to have access to the production snapshot
+- Provision the staging cluster from the latest production snapshot, which will force the destruction of the old cluster and creation of a new one (if an old one existed) because the snapshot from which the cluster is being restored will have a different name for each execution
+- Verify that the staging cluster contains the expected data
+
+### Redshift cluster
+
+Set the necessary environment variables:
+
+```shell
+export TF_VAR_admin_password=
+export TF_VAR_production_aws_account_number=
+export TF_VAR_my_ip="$(curl ipv4.icanhazip.com)"
+```
+
+`redshift/security.tf` contains basic networking and security infrastructure configuration to allow us to connect to our Redshift clusters from our local machine.
+
+`aws_default_security_group` brings a VPC's default security group under management and [doesn't behave like a standard Terraform resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_security_group). It's probably best to avoid this in (actual) production projects due to its unusual behaviour—including, but not limited to, the fact that rules created by Terraform will be orphaned following the destruction of a default group.
+
+Note the ingress rule in the `aws_default_security_group`:
+
+```hcl
+ingress {
+  from_port = 5439
+  to_port   = 5439
+  protocol  = "tcp"
+  cidr_blocks = [
+    "${var.my_ip}/32"
+  ]
+}
+```
+
+This will allow a local machine on our IP to connect to the cluster.
+
+The config in `redshift/redshift.tf` creates the simplest possible Redshift cluster, pretty much.
+
+Applying the Terraform config as per usual, with state stored locally:
+
+```shell
+cd production
+terraform init
+terraform apply
+```
+
+Copy the value of the `cluster_endpoint_host` output to clipboard. It should look something like `my-cluster.c1yfphqse7da.eu-west-1.redshift.amazonaws.com`.
+
+### Creating some data
+
+Assuming `psql` is installed, we can connect to the cluster (`dev` is the default database created by Redshift if an alternative name isn't specified.):
+
+```shell
+psql -h my-cluster.c1yfphqse7da.eu-west-1.redshift.amazonaws.com -U redshiftadmin -d dev -p 5439
+```
+
+Enter the value of `TF_VAR_admin_password` when prompted.
+
+Let's create a table:
+
+```sql
+dev=#
+  create table films (
+    id int unique not null,
+    title varchar ( 50 ) not null
+  );
+```
+
+Add a single row:
+
+```sql
+dev=#
+  insert into films(id, title)
+  values (1, 'Clueless');
+```
+
+And check that the row exists:
+
+```sql
+dev=#
+  select * from films;
+
+   id |  title   
+
+  ----+----------
+
+    1 | Clueless
+
+  (1 row)
+```
+
+### Snapshot and restore
+
+`restore.sh` wraps the Python script mentioned in [Overview](#overview) (`shapshot.py`) and uses a `sys.exit()` hack to assign the name of the snapshot to a shell variable so that it can be consumed as an inline Terraform variable during `terraform apply`:
+
+```python
+if authorize_response["ResponseMetadata"]["HTTPStatusCode"] == 200:
+    print(snapshot_identifier)
+    sys.exit(0)
+else:
+    sys.exit(1)
+```
+
+This works because the value of `snapshot_identifier` is the only thing written to stdout by the script. Hence, it is extremely brittle!
+
+We apply an epoch suffix to the snapshot identifier:
+
+```python
+snapshot_identifier = f"production-snapshot-{int(time.time())}"
+```
+
+So that we can be quite certain that
+
+```python
+describe_cluster_snapshots(
+        SnapshotIdentifier=snapshot_identifier,
+)
+```
+
+Will return only one result.
+
+The rest of our code in `create-production-snapshot.py` is pretty straightforward use of `boto3` methods to create a manual snapshot, wait for it to become available and authorise the staging AWS account to access it.
+
+The following environment variables need to be set:
+
+```shell
+export SOURCE_ACCOUNT_AWS_ACCESS_KEY_ID=
+export SOURCE_ACCOUNT_AWS_SECRET_ACCESS_KEY=
+export TARGET_ACCOUNT_AWS_ACCOUNT_NUMBER=
+```
+
+Where our source is the production account and target is the staging account.
+
+Also, `restore.sh` assumes that our `~/.aws/credentials` looks something like:
+
+```shell
+[staging]
+aws_access_key_id=AKXXXXXXXXXXXXXXX
+aws_secret_access_key=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+
+[production]
+aws_access_key_id=AKXXXXXXXXXXXXXXX
+aws_secret_access_key=YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+```
+
+Ensuring our two scripts are executable with `chmod +x`, running our shell script should provision a new cluster in the staging account (approving the plan when prompted):
+
+```shell
+./restore.sh
+```
+
+### Verifying the data exists
+
+Connecting to our staging cluster (note that the admin password will now be the same as the snapshot's admin password):
+
+```shell
+psql -h my-cluster.cjjp3aatioqj.eu-west-1.redshift.amazonaws.com -U redshiftadmin -d dev -p 5439
+```
+
+Querying the `films` table:
+
+```sql
+dev=#
+  select * from films;
+
+   id |  title   
+
+  ----+----------
+
+    1 | Clueless
+
+  (1 row)
+```
+
+Oh, lovely.
+
+### Cleanup
+
+Lets's tear down the AWS infra to avoid burning cash:
+
+```shell
+export AWS_PROFILE=production
+cd production
+terraform destroy
+export AWS_PROFILE=staging
+cd ../staging
+terraform destroy -var "snapshot_identifier=whatever"
+```
+
+## Gotchas/notes
+
+- Assumes a one-to-one AWS account-environment relationship
+- The admin password of the new cluster will be the same as the snapshot's and needs to be manually changed through the AWS Console—this is an annoyance for secrets management (not to mention a security issue!)
+- A sensible value (likely the last manual taken in production) for `snapshot_identifier` would need to be provided if we wanted to make a config change to the staging cluster and re-provision it directly using Terraform commands (i.e., `cd staging & terraform apply`), as this is passed as inline variable in the shell script
+- Depending on snapshot and cluster size, destroying and recreating a cluster each time we want to production data in another environment probably isn't the most resource-efficient method—there are likely to be other more data-focused solutions out there
