@@ -26,4 +26,4 @@ To ensure content is server-side rendered locally (as it is in production):
 
 ## License
 
-[`LICENSE`](./LICENSE)
+Distributed under an [MIT License](./LICENSE).
