@@ -25,14 +25,19 @@ The *native* AWS solution involves a Redshift data share. Unfortunately this mea
 ### Overview
 
 - Create a "production" Redshift cluster and insert some data
+  - Terraform config
+  - Add some data that we will use to verify that the restore worked
 - Using a Python script that leverages `boto3`:
-- Take a manual snapshot of the production cluster
-- Wait for it to become ready
-- Authorise the staging AWS account to have access to the production snapshot
+  - Take a manual snapshot of the production cluster
+  - Wait for it to become ready
+  - Authorise the staging AWS account to have access to the production snapshot
 - Provision the staging cluster from the latest production snapshot, which will force the destruction of the old cluster and creation of a new one (if an old one existed) because the snapshot from which the cluster is being restored will have a different name for each execution
 - Verify that the staging cluster contains the expected data
+- Cleanup
 
 ### Redshift cluster
+
+#### Terraform
 
 Set the necessary environment variables:
 
@@ -73,7 +78,7 @@ terraform apply
 
 Copy the value of the `cluster_endpoint_host` output to clipboard. It should look something like `my-cluster.c1yfphqse7da.eu-west-1.redshift.amazonaws.com`.
 
-### Creating some data
+#### Creating some data
 
 Assuming `psql` is installed, we can connect to the cluster (`dev` is the default database created by Redshift if an alternative name isn't specified.):
 
@@ -116,7 +121,7 @@ dev=#
   (1 row)
 ```
 
-### Snapshot and restore
+### Snapshot
 
 `restore.sh` wraps the Python script mentioned in [Overview](#overview) (`shapshot.py`) and uses a `sys.exit()` hack to assign the name of the snapshot to a shell variable so that it can be consumed as an inline Terraform variable during `terraform apply`:
 
@@ -147,6 +152,8 @@ describe_cluster_snapshots(
 Will return only one result.
 
 The rest of our code in `create-production-snapshot.py` is pretty straightforward use of `boto3` methods to create a manual snapshot, wait for it to become available and authorise the staging AWS account to access it.
+
+### Restore
 
 The following environment variables need to be set:
 
@@ -203,7 +210,7 @@ Oh, lovely.
 
 ### Cleanup
 
-Lets's tear down the AWS infra to avoid burning cash:
+Let's tear down the AWS infra to avoid burning cash:
 
 ```shell
 export AWS_PROFILE=production

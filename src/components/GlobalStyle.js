@@ -3,7 +3,6 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
-
   html, body {
     height: 100%;
   }
@@ -35,9 +34,8 @@ const GlobalStyle = createGlobalStyle`
     max-width: 100%;
     width: 100%;
 
-      @media (min-width: 550px) {
-        height: 34rem;
-      }
+    @media (min-width: 550px) {
+      height: 34rem;
     }
   }
 
@@ -53,11 +51,6 @@ const GlobalStyle = createGlobalStyle`
 
   figure {
     margin: 0;
-  }
-
-  ul {
-    padding: 0;
-    list-style: square;
   }
 
   a {
@@ -120,7 +113,7 @@ const GlobalStyle = createGlobalStyle`
       width: 80%;
     }
   }
-  
+
   .home-image {
     margin-left: auto;
     margin-right: auto;
@@ -130,7 +123,7 @@ const GlobalStyle = createGlobalStyle`
       width: 100%;
     }
   }
-  
+
   .home-image {
     @media (min-width: 520px) {
       margin-top: 2em;
