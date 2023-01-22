@@ -13,7 +13,7 @@ const contact = () => (
         or
         {' '}
         <XA href="https://cal.com/blairnangle">schedule a call with me</XA>
-        . I check emails about twice per day.
+        . I check my emails morning, lunch and evening.
       </p>
     </div>
   </Layout>
