@@ -64,7 +64,8 @@
           "monospace",
           "resp",
           "ul",
-          "jsx"
+          "jsx",
+          "mailto"
         ]
       }
     ]

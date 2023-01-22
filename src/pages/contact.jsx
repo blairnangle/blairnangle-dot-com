@@ -6,13 +6,14 @@ const contact = () => (
   <Layout>
     <div>
       <p>
-        <XA href="mailto:hi@blairnangle.com">Email</XA>
+        Send me an
+        {' '}
+        <XA href="mailto:hi@blairnangle.com">email</XA>
         {' '}
         or
         {' '}
-        <XA href="https://twitter.com/blairnangle">tweet</XA>
-        {' '}
-        me.
+        <XA href="https://cal.com/blairnangle">schedule a call with me</XA>
+        . I check emails about twice per day.
       </p>
     </div>
   </Layout>
