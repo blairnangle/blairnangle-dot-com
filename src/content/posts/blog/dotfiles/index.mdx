@@ -1,0 +1,220 @@
+---
+title: "dotfiles"
+date: "2023-02-13"
+publish: true
+excerpt: "I recently decided it was time to give my dotfiles an early spring-clean and upgrade."
+postType: "blog"
+---
+#
+
+[Just show me the code](https://github.com/blairnangle/dotfiles/).
+
+I recently decided it was time to give my dotfiles an early spring-clean and upgrade. While doing so, I felt *compelled* to write up an explanation of what remained. That explanation is below.
+
+---
+
+## Setup
+
+`set-up.sh` attempts to install the necessary dependencies for my dotfiles to work:
+
+```shell
+#!/bin/zsh
+
+set -e -o pipefail
+
+echo "Installing fonts…"
+brew tap homebrew/cask-fonts
+brew install --cask font-jetbrains-mono-nerd-font
+osascript -e "tell application \"Terminal\" to set the font name of window 1 to \"JetBrainsMono Nerd Font\""
+
+echo "Configuring zsh…"
+if [ -f ~/.zshrc ]; then
+  printf "\nExisting .zshrc found. Quitting auto set up."
+  exit 1
+else
+  echo "Sym-linking .zshrc…"
+  ln -s dotfiles/zsh_profile ~/.zshrc
+fi
+
+echo "Installing and configuring starship…"
+brew install starship
+if [ -f ~/.config/starship.toml ]; then
+  printf "\nExisting starship.toml found. Quitting auto set up."
+  exit 1
+else
+  echo "Sym-linking starship.toml…"
+  ln -s ~/dotfiles/starship.toml ~/.config/starship.toml
+fi
+```
+
+Idempotency intended but not guaranteed. For use on macOS. Assumes `dotfiles` has been cloned to my home directory and that Homebrew has been installed.
+
+## Starship
+
+The biggest improvement I've noticed was from adding the Starship prompt on top of zsh with some minimal customisation:
+
+```toml
+add_newline = false
+
+[character]
+success_symbol = '[➜](bold green) '
+error_symbol = '[✗](bold red) '
+
+[directory]
+truncate_to_repo = false
+
+[gcloud]
+disabled = true
+```
+
+I have played around with some funkier shell abstractions in the past, but in general I think more customisation leads to more reliance on the specific quirks of my own terminal which leads to less comfort anytime I need to debug something on someone else's laptop or a remote server. Not to mention increased brittleness. Theo Browne recorded [a good video on keeping it simple](https://www.youtube.com/watch?v=Hj1a7QuwjSI).
+
+My two favourite Starship features are:
+- [Git Status](https://starship.rs/config/#git-status)—it took me a while to get used to the meanings of the icons, but it was worth it; my "g", "s" and "t" keys have seen their usage plummet
+- [AWS](https://starship.rs/config/#aws)—being able to see, for example, `~ on ☁️ dev (eu-west-2)` saves me about three seconds where before I was needlessly re-activating my AWS profile; invaluable
+
+## Aliases and functions
+
+I have collected a few aliases and functions over the years. The distinction between the former and the latter categories of shell abstraction is that my functions reference positional arguments, while aliases do not.
+
+I've explained a few of the more opinionated ones below.
+
+### `logs()`
+
+```shell
+function logs() {
+  if [ -n "$AWS_PROFILE" ]; then
+    saw "$1" /aws/elasticbeanstalk/api-"$2"/var/log/eb-docker/containers/eb-current-app/stdouterr.log "${@:3}"
+  else
+    echo "AWS_PROFILE is not set - set it to the environment you want to view logs for"
+  fi
+}
+```
+
+At Surgery Hero we have a single backend server running on Elastic Beanstalk. `logs()` just wraps the great [`saw`](https://github.com/TylerBrock/saw) project by [Tyler Brock](https://tylerbrock.com/) to simplify fetching logs from CloudWatch.
+
+Example usage:
+
+```shell
+logs watch dev
+logs get dev --start -1h
+```
+
+I'm looking forward to rewriting this once our architecture evolves into something more complex.
+
+### `delete_branch()`
+
+```shell
+function delete_branch() {
+  echo -e "Deletes a branch both locally and remotely or prunes local reference if it has already been deleted from remote\n"
+
+  echo -e "Assumes \"origin\" as remote alias\n"
+
+  git push -d origin "${1}"
+  git branch -d "${1}"
+  git branch -r --delete origin/"${1}"
+}
+```
+
+This is useful for nuking an old Git branch locally and remotely. This should be used with care!
+
+Example usage:
+
+```shell
+delete_branch old-branch-that-is-definitely-not-needed-by-anyone-in-the-team
+```
+
+### `ij`
+
+```shell
+function ij() {
+  open -na "IntelliJ IDEA.app" --args "$@"
+}
+```
+
+Taken from the [official docs](https://www.jetbrains.com/help/idea/working-with-the-ide-features-from-command-line.html#toolbox). I find this useful for quitting the app completely after I have somehow opened twenty projects and then relaunching it from the command line with the one project I actually care about.
+
+### `ip` and `copyip`
+
+```shell
+alias ip="curl ipv4.icanhazip.com"
+alias copyip="ip | pbcopy"
+```
+
+`ip` fetches my IPv4 address.
+
+`copyip` does the same but also copies result to the macOS clipboard.
+
+### `gh`
+
+```shell
+alias gh="history | grep"
+```
+
+Grepping terminal history. I find this useful whenever I can't remember the beginning of a command.
+
+### `copypwd`
+
+```shell
+alias copypwd="pwd | pbcopy"
+```
+
+For whenever using the mouse to select the current directory path feels like too much effort.
+
+## Other configuration
+
+I have some manual configuration that aids my work but that isn't checked into my `dotfiles` project.
+
+### Git
+
+I have two folders for Git-controlled projects: `~/surgeryhero` and `~/personal`. I have used some config to tell Git which identity with which to sign commits.
+
+`~/.gitconfig`:
+
+```shell
+# default to Surgery Hero config
+[include]
+  path = ~/.gitconfig.surgeryhero
+
+# when working on personal projects
+[includeIf "gitdir:**/personal/**/.git"]
+  path = ~/.gitconfig.personal
+
+[gpg]
+	program = gpg
+[commit]
+	gpgSign = true
+[init]
+	templatedir = ~/.git_template
+[core]
+    hooksPath = ~/surgeryhero/match
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+```
+
+Where `~/.gitconfig/surgeryhero` is:
+
+```shell
+[user]
+  name = Blair Nangle
+  email = blair@surgeryhero.com
+  signingkey = AAAAAAAAAAAAAAAA
+```
+
+And `~/.gitconfig.personal` is:
+
+```shell
+[user]
+  name = Blair Nangle
+  email = hi@blairnangle.com
+  signingkey = BBBBBBBBBBBBBBBB
+```
+
+This allows me to use different email addresses and GPG keys to sign Surgery Hero and personal commits.
+
+---
+
+Apologies to anyone whose code I have borrowed and failed to credit! Some of my dotfile config has been around for a long time and its provenance has been lost to the mists of time.
