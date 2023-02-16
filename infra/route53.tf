@@ -59,7 +59,8 @@ resource "aws_route53_record" "txt_verification" {
   records = [
     var.zoho_email_txt_verification_record_value,
     var.zoho_spf_txt_verification_record_value,
-    var.keybase_txt_verification_record_value
+    var.keybase_txt_verification_record_value,
+    var.brave_rewards_txt_verification_record_value
   ]
 }
 

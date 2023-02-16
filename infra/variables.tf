@@ -8,3 +8,4 @@ variable "zoho_email_txt_verification_record_value" {}
 variable "zoho_spf_txt_verification_record_value" {}
 variable "zoho_dkim_txt_verification_record_value" {}
 variable "keybase_txt_verification_record_value" {}
+variable "brave_rewards_txt_verification_record_value" {}

@@ -11,6 +11,7 @@ env:
   TF_VAR_zoho_spf_txt_verification_record_value: ${{ secrets.ZOHO_SPF_TXT_VERIFICATION_RECORD_VALUE }}
   TF_VAR_zoho_dkim_txt_verification_record_value: ${{ secrets.ZOHO_DKIM_TXT_VERIFICATION_RECORD_VALUE }}
   TF_VAR_keybase_txt_verification_record_value: ${{ secrets.KEYBASE_TXT_VERIFICATION_RECORD_VALUE }}
+  TF_VAR_brave_rewards_txt_verification_record_value: ${{ secrets.BRAVE_REWARDS_TXT_VERIFICATION_RECORD_VALUE }}
 
 jobs:
   terraform:
