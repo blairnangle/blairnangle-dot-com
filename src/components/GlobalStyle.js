@@ -53,6 +53,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
+  ul {
+    padding: 0;
+    list-style: square;
+  }
+
   a {
     text-decoration: none;
     color: blue;
