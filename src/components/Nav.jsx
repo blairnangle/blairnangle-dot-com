@@ -102,6 +102,11 @@ function Nav() {
           </NavItem>
         </ListElement>
         <ListElement>
+          <NavItem to="/diet" activeClassName={activeClassName}>
+            diet
+          </NavItem>
+        </ListElement>
+        <ListElement>
           <NavItem to="/contact" activeClassName={activeClassName}>
             contact
           </NavItem>
