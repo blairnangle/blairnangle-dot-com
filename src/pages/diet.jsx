@@ -18,7 +18,7 @@ function Pocket() {
   return <PocketArticles articleList={articles} />;
 }
 
-function InformationDiet(props) {
+function InformationDiet() {
   return (
     <Layout>
       <h2>My information diet</h2>
@@ -26,8 +26,14 @@ function InformationDiet(props) {
         <p>
           Do you ever wonder where my half-baked ideas come from? Are you ever puzzled by my ability to hold two conflicting (yet both wrong) ideas in my head at once? Now you can see where they were stolen from!
         </p>
+        <p>
+          You can see the code that powers this page
+          {' '}
+          <a href="https://github.com/blairnangle/information-diet">here</a>
+          .
+        </p>
       </div>
-      <Pocket {...props} />
+      <Pocket />
     </Layout>
   );
 }
