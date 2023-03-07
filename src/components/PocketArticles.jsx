@@ -24,7 +24,7 @@ const StyledArticleItem = styled.li`
 const StyledArticleLink = styled(XA)``;
 
 function PocketArticles({ articleList }) {
-  const heading = articleList.length === 0 ? '' : 'Recently read articles on Pocket';
+  const heading = articleList.length === 0 ? '' : 'Twenty most recently read articles (via Pocket)';
   const postLinks = articleList.length === 0 ? ''
     : articleList.map((content) => (
       <StyledArticleItem key={content.title}>

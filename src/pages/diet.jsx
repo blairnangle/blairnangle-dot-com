@@ -1,6 +1,23 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import PocketArticles from '../components/PocketArticles';
+import GoodreadsBooks from '../components/GoodreadsBooks';
+
+function Goodreads() {
+  const [books, setBooks] = useState([]);
+
+  fetch('https://s3.eu-west-2.amazonaws.com/information-diet.blairnangle.com/goodreads.json').then(
+    (response) => response.json(),
+  ).then((booksData) => {
+    setBooks(booksData);
+  }).catch(
+    (err) => {
+      console.log(err, ' error');
+    },
+  );
+
+  return <GoodreadsBooks bookList={books} />;
+}
 
 function Pocket() {
   const [articles, setArticles] = useState([]);
@@ -33,6 +50,7 @@ function InformationDiet() {
           .
         </p>
       </div>
+      <Goodreads />
       <Pocket />
     </Layout>
   );
