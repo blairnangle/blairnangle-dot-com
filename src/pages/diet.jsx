@@ -41,13 +41,19 @@ function InformationDiet() {
       <h2>My information diet</h2>
       <div>
         <p>
-          Do you ever wonder where my half-baked ideas come from? Are you ever puzzled by my ability to hold two conflicting (yet both wrong) ideas in my head at once? Now you can see where they were stolen from!
+          Do you ever wonder where my half-baked ideas come from?
+          Are you ever puzzled by my ability to hold two conflicting
+          (yet both wrong) ideas in my head at once?
+          Now you can see where they were stolen from!
         </p>
         <p>
           You can see the code that powers this page
           {' '}
           <a href="https://github.com/blairnangle/information-diet">here</a>
           .
+        </p>
+        <p>
+          Thank you for indulging me in this signalling exercise.
         </p>
       </div>
       <Goodreads />
