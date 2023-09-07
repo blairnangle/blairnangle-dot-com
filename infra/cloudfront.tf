@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
-    domain_name = aws_s3_bucket.static_hosting.website_endpoint
+    domain_name = aws_s3_bucket_website_configuration.static_hosting.website_endpoint
     origin_id   = "S3-${var.domain}"
 
     custom_origin_config {

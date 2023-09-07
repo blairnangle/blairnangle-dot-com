@@ -64,6 +64,16 @@ resource "aws_route53_record" "txt_verification" {
   ]
 }
 
+resource "aws_route53_record" "dmarc_txt_verification" {
+  name    = "_dmarc.blairnangle.com."
+  type    = "TXT"
+  zone_id = aws_route53_zone.blairnangle_dot_com.id
+  ttl     = 300
+  records = [
+    var.zoho_dmarc_txt_verification_record_value
+  ]
+}
+
 resource "aws_route53_record" "domain_keys_identified_mail" {
   name    = "zoho._domainkey"
   type    = "TXT"

@@ -2,6 +2,13 @@ resource "aws_s3_bucket" "static_hosting" {
   bucket = var.domain
 }
 
+resource "aws_s3_bucket_versioning" "static_hosting" {
+  bucket = aws_s3_bucket.static_hosting.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_website_configuration" "static_hosting" {
   bucket = aws_s3_bucket.static_hosting.bucket
 
