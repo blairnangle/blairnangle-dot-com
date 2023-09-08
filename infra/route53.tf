@@ -26,6 +26,18 @@ resource "aws_route53_record" "www" {
   }
 }
 
+resource "aws_route53_record" "brain" {
+  zone_id = aws_route53_zone.blairnangle_dot_com.id
+  name    = "brain.${var.domain}"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.brain.domain_name
+    zone_id                = aws_cloudfront_distribution.brain.hosted_zone_id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_route53_record" "validation" {
   count = length(local.cert_subject_alternative_names) + 1
 
