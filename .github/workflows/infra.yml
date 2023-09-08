@@ -1,8 +1,10 @@
 name: infra
 
-on:
-  push:
-    branches: [ main ]
+#on:
+#  push:
+#    branches: [ main ]
+
+on: workflow_dispatch
 
 env:
   INFRA_DIRECTORY: infra

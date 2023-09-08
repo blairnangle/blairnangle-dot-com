@@ -22,3 +22,6 @@ build
 
 # macOS metadata
 .DS_Store
+
+# Project-specific Git commit message (to configure: git config commit.template .gitmessage)
+.gitmessage
