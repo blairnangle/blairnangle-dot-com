@@ -1,4 +1,4 @@
-name: build-and-deploy
+name: website
 
 on:
   workflow_run:

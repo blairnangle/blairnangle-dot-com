@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  brain:
-    name: Brain
+  build-and-deploy:
+    name: Build and deploy
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
