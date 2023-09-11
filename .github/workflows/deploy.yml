@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ./build.sh website
+        run: ./build.sh
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
@@ -33,4 +33,4 @@ jobs:
           aws-region: eu-west-2
 
       - name: Deploy
-        run: ./deploy.sh blairnangle.com ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: ./deploy.sh public blairnangle.com ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
