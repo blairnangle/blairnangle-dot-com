@@ -1,12 +1,10 @@
 name: build-and-deploy
 
-#on:
-#  workflow_run:
-#    workflows: [ infra ]
-#    types: [ completed ]
-#    branches: [ main ]
-
-on: workflow_dispatch
+on:
+  workflow_run:
+    workflows: [ infra ]
+    types: [ completed ]
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -25,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ./build.sh
+        run: ./build.sh website
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
@@ -35,4 +33,4 @@ jobs:
           aws-region: eu-west-2
 
       - name: Deploy
-        run: ./deploy.sh ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: ./deploy.sh blairnangle.com ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
