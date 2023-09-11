@@ -23,6 +23,7 @@ jobs:
         uses: actions/setup-node@v3
 
       - name: Install dependencies
+        working-directory: brain
         run: npm ci
 
       - name: Build
