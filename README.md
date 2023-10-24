@@ -2,7 +2,7 @@
 
 [![infra](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/infra.yml/badge.svg)](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/infra.yml)
 
-[![build-and-deploy](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/deploy.yml/badge.svg)](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/deploy.yml)
+[![website](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/website.yml/badge.svg)](https://github.com/blairnangle/blairnangle-dot-com/actions/workflows/website.yml)
 
 Personal website. Hosted on AWS S3 and CloudFront.
 
