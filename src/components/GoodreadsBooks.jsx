@@ -23,8 +23,27 @@ const StyledBookItem = styled.li`
 `;
 const StyledBookLink = styled(XA)``;
 
-function GoodreadsBooks({ bookList }) {
-  const heading = bookList.length === 0 ? '' : 'Twenty most recently read books (via Goodreads)';
+function chooseHeading(bookList, shelf) {
+  if (bookList.length === 0) {
+    return '';
+  }
+  if (shelf === 'currentlyReading') {
+    return 'Books I\'m currently reading (via Goodreads)';
+  }
+
+  return 'Twenty most recently read books (via Goodreads)';
+}
+
+function chooseDateSentence(content, shelf) {
+  if (shelf === 'currentlyReading') {
+    return `(started on ${content.started})`;
+  }
+
+  return `(finished on ${content.finished})`;
+}
+
+function GoodreadsBooks({ bookList, shelf }) {
+  const heading = chooseHeading(bookList, shelf);
   const postLinks = bookList.length === 0 ? ''
     : bookList.map((content) => (
       <StyledBookItem key={content.title}>
@@ -33,10 +52,7 @@ function GoodreadsBooks({ bookList }) {
           {content.author !== '' ? ` by ${content.author}` : ''}
         </StyledBookLink>
         <DateSpan>
-          (finished on
-          {' '}
-          {content.finished}
-          )
+          {chooseDateSentence(content, shelf)}
         </DateSpan>
       </StyledBookItem>
     ));
@@ -56,6 +72,8 @@ GoodreadsBooks.propTypes = {
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    finished: PropTypes.string.isRequired,
+    finished: PropTypes.string,
+    started: PropTypes.string,
   })).isRequired,
+  shelf: PropTypes.string.isRequired,
 };

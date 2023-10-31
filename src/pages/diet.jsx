@@ -3,10 +3,10 @@ import Layout from '../components/Layout';
 import PocketArticles from '../components/PocketArticles';
 import GoodreadsBooks from '../components/GoodreadsBooks';
 
-function Goodreads() {
+function GoodreadsCurrentlyReading() {
   const [books, setBooks] = useState([]);
 
-  fetch('https://s3.eu-west-2.amazonaws.com/information-diet.blairnangle.com/goodreads.json').then(
+  fetch('https://s3.eu-west-2.amazonaws.com/information-diet.blairnangle.com/goodreads-currently-reading.json').then(
     (response) => response.json(),
   ).then((booksData) => {
     setBooks(booksData);
@@ -16,7 +16,23 @@ function Goodreads() {
     },
   );
 
-  return <GoodreadsBooks bookList={books} />;
+  return <GoodreadsBooks bookList={books} shelf="currentlyReading" />;
+}
+
+function GoodreadsRead() {
+  const [books, setBooks] = useState([]);
+
+  fetch('https://s3.eu-west-2.amazonaws.com/information-diet.blairnangle.com/goodreads-read.json').then(
+    (response) => response.json(),
+  ).then((booksData) => {
+    setBooks(booksData);
+  }).catch(
+    (err) => {
+      console.log(err, ' error');
+    },
+  );
+
+  return <GoodreadsBooks bookList={books} shelf="read" />;
 }
 
 function Pocket() {
@@ -56,7 +72,8 @@ function InformationDiet() {
           Thank you for indulging me in this signalling exercise.
         </p>
       </div>
-      <Goodreads />
+      <GoodreadsCurrentlyReading />
+      <GoodreadsRead />
       <Pocket />
     </Layout>
   );
