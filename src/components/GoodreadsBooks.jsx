@@ -13,7 +13,7 @@ const DateSpan = styled.span`
   }
 `;
 
-const StyledBookListing = styled.ul`
+const StyledBookList = styled.ul`
   list-style: none;
 `;
 
@@ -44,7 +44,7 @@ function chooseDateSentence(content, shelf) {
 
 function GoodreadsBooks({ bookList, shelf }) {
   const heading = chooseHeading(bookList, shelf);
-  const postLinks = bookList.length === 0 ? ''
+  const books = bookList.length === 0 ? ''
     : bookList.map((content) => (
       <StyledBookItem key={content.title}>
         <StyledBookLink href={content.url}>
@@ -60,7 +60,7 @@ function GoodreadsBooks({ bookList, shelf }) {
   return (
     <>
       <h3>{heading}</h3>
-      <StyledBookListing>{postLinks}</StyledBookListing>
+      <StyledBookList>{books}</StyledBookList>
     </>
   );
 }

@@ -13,7 +13,7 @@ const DateSpan = styled.span`
   }
 `;
 
-const StyledArticleListing = styled.ul`
+const StyledArticleList = styled.ul`
   list-style: none;
 `;
 
@@ -25,7 +25,7 @@ const StyledArticleLink = styled(XA)``;
 
 function PocketArticles({ articleList }) {
   const heading = articleList.length === 0 ? '' : 'Twenty most recently read articles (via Pocket)';
-  const postLinks = articleList.length === 0 ? ''
+  const articles = articleList.length === 0 ? ''
     : articleList.map((content) => (
       <StyledArticleItem key={content.title}>
         <StyledArticleLink href={content.url}>
@@ -44,7 +44,7 @@ function PocketArticles({ articleList }) {
   return (
     <>
       <h3>{heading}</h3>
-      <StyledArticleListing>{postLinks}</StyledArticleListing>
+      <StyledArticleList>{articles}</StyledArticleList>
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import PocketArticles from '../components/PocketArticles';
 import GoodreadsBooks from '../components/GoodreadsBooks';
+import LetterboxdFilms from '../components/LetterboxdFilms';
 
 function GoodreadsCurrentlyReading() {
   const [books, setBooks] = useState([]);
@@ -51,6 +52,22 @@ function Pocket() {
   return <PocketArticles articleList={articles} />;
 }
 
+function Letterboxd() {
+  const [films, setFilms] = useState([]);
+
+  fetch('https://s3.eu-west-2.amazonaws.com/information-diet.blairnangle.com/letterboxd.json').then(
+    (response) => response.json(),
+  ).then((filmsData) => {
+    setFilms(filmsData);
+  }).catch(
+    (err) => {
+      console.log(err, ' error');
+    },
+  );
+
+  return <LetterboxdFilms filmList={films} />;
+}
+
 function InformationDiet() {
   return (
     <Layout>
@@ -75,6 +92,7 @@ function InformationDiet() {
       <GoodreadsCurrentlyReading />
       <GoodreadsRead />
       <Pocket />
+      <Letterboxd />
     </Layout>
   );
 }
