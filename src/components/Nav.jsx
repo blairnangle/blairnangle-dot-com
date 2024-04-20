@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import XA from '../components/ExternalAnchor';
 
 import styled from 'styled-components';
 
@@ -115,6 +116,11 @@ function Nav() {
           <NavItem to="/elsewhere" activeClassName={activeClassName}>
             elsewhere
           </NavItem>
+        </ListElement>
+        <ListElement>
+          <XA href="https://brain.blairnangle.com">
+            /brain
+          </XA>
         </ListElement>
       </StyledList>
     </StyledNav>

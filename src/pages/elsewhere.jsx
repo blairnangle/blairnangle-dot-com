@@ -48,7 +48,7 @@ const elsewhere = () => (
       <p>
         •
         {' '}
-        <XA href="https://twitter.com/blairnangle">Twitter</XA>
+        <XA href="https://twitter.com/blairnangle">X (Twitter)</XA>
       </p>
     </div>
   </Layout>
