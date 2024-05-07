@@ -118,8 +118,8 @@ function Nav() {
           </NavItem>
         </ListElement>
         <ListElement>
-          <XA href="https://brain.blairnangle.com">
-            /brain
+          <XA href="https://notes.blairnangle.com">
+            /notes
           </XA>
         </ListElement>
       </StyledList>
