@@ -28,24 +28,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
             value: 'post',
           });
           break;
-        case 'generativePosts':
-          slug = createFilePath({
-            node,
-            getNode,
-          });
 
-          createNodeField({
-            node,
-            name: 'slug',
-            value: `/generative${slug}`,
-          });
-
-          createNodeField({
-            node,
-            name: 'type',
-            value: 'post',
-          });
-          break;
         case 'pages':
         default:
           slug = createFilePath({

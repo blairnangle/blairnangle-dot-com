@@ -98,11 +98,6 @@ function Nav() {
           </NavItem>
         </ListElement>
         <ListElement>
-          <NavItem to="/generative" activeClassName={activeClassName}>
-            generative
-          </NavItem>
-        </ListElement>
-        <ListElement>
           <NavItem to="/diet" activeClassName={activeClassName}>
             diet
           </NavItem>

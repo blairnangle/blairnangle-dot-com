@@ -31,10 +31,7 @@ export const query = graphql`
         frontmatter: {
           publish: {
             eq: true
-           },
-          postType: {
-            eq: "blog"
-          }
+           }
         }
       }
       sort: { fields: [frontmatter___date], order: DESC }

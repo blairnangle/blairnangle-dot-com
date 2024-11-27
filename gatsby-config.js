@@ -65,13 +65,6 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'generativePosts',
-        path: `${__dirname}/src/content/posts/generative`,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-nprogress',
       options: {
         color: '#0000ff',
