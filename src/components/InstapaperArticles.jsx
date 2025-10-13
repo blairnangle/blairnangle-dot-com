@@ -23,14 +23,13 @@ const StyledArticleItem = styled.li`
 `;
 const StyledArticleLink = styled(XA)``;
 
-function PocketArticles({ articleList }) {
-  const heading = articleList.length === 0 ? '' : 'Twenty most recently read articles (via Pocket)';
+function InstapaperArticles({ articleList }) {
+  const heading = articleList.length === 0 ? '' : 'Most recently read articles (via Instapaper)';
   const articles = articleList.length === 0 ? ''
     : articleList.map((content) => (
       <StyledArticleItem key={content.title}>
         <StyledArticleLink href={content.url}>
           {content.title}
-          {content.authors !== '' ? ` by ${content.authors}` : ''}
         </StyledArticleLink>
         <DateSpan>
           (read on
@@ -49,12 +48,11 @@ function PocketArticles({ articleList }) {
   );
 }
 
-export default PocketArticles;
+export default InstapaperArticles;
 
-PocketArticles.propTypes = {
+InstapaperArticles.propTypes = {
   articleList: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
-    authors: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     date_read: PropTypes.string.isRequired,
   })).isRequired,

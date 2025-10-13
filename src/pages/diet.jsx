@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import PocketArticles from '../components/PocketArticles';
+import InstapaperArticles from '../components/InstapaperArticles';
 import GoodreadsBooks from '../components/GoodreadsBooks';
 import LetterboxdFilms from '../components/LetterboxdFilms';
 
@@ -38,10 +38,10 @@ function GoodreadsRead() {
   return <GoodreadsBooks bookList={books} shelf="read" />;
 }
 
-function Pocket() {
+function Instapaper() {
   const [articles, setArticles] = useState([]);
 
-  fetch(`${bucketHost}/pocket.json`).then(
+  fetch(`${bucketHost}/instapaper.json`).then(
     (response) => response.json(),
   ).then((articlesData) => {
     setArticles(articlesData);
@@ -51,7 +51,7 @@ function Pocket() {
     },
   );
 
-  return <PocketArticles articleList={articles} />;
+  return <InstapaperArticles articleList={articles} />;
 }
 
 function Letterboxd() {
@@ -93,7 +93,7 @@ function InformationDiet() {
       </div>
       <GoodreadsCurrentlyReading />
       <GoodreadsRead />
-      <Pocket />
+      <Instapaper />
       <Letterboxd />
     </Layout>
   );
