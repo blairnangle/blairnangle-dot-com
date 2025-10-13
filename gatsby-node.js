@@ -10,45 +10,45 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 
       let slug = '';
       switch (sourceInstanceName) {
-        case 'blogPosts':
-          slug = createFilePath({
-            node,
-            getNode,
-          });
+      case 'blogPosts':
+        slug = createFilePath({
+          node,
+          getNode,
+        });
 
-          createNodeField({
-            node,
-            name: 'slug',
-            value: `/blog${slug}`,
-          });
+        createNodeField({
+          node,
+          name: 'slug',
+          value: `/blog${slug}`,
+        });
 
-          createNodeField({
-            node,
-            name: 'type',
-            value: 'post',
-          });
-          break;
+        createNodeField({
+          node,
+          name: 'type',
+          value: 'post',
+        });
+        break;
 
-        case 'pages':
-        default:
-          slug = createFilePath({
-            node,
-            getNode,
-            basePath: 'pages',
-          });
+      case 'pages':
+      default:
+        slug = createFilePath({
+          node,
+          getNode,
+          basePath: 'pages',
+        });
 
-          createNodeField({
-            node,
-            name: 'slug',
-            value: slug,
-          });
+        createNodeField({
+          node,
+          name: 'slug',
+          value: slug,
+        });
 
-          createNodeField({
-            node,
-            name: 'type',
-            value: 'page',
-          });
-          break;
+        createNodeField({
+          node,
+          name: 'type',
+          value: 'page',
+        });
+        break;
       }
     }
   } catch (e) {
