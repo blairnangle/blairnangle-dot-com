@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import InstapaperArticles from '../components/InstapaperArticles';
 import GoodreadsBooks from '../components/GoodreadsBooks';
@@ -9,15 +9,17 @@ const bucketHost = 'https://s3.eu-west-2.amazonaws.com/diet.blairnangle.com';
 function GoodreadsCurrentlyReading() {
   const [books, setBooks] = useState([]);
 
-  fetch(`${bucketHost}/goodreads-currently-reading.json`).then(
-    (response) => response.json(),
-  ).then((booksData) => {
-    setBooks(booksData);
-  }).catch(
-    (err) => {
-      console.log(err, ' error');
-    },
-  );
+  useEffect(() => {
+    fetch(`${bucketHost}/goodreads-currently-reading.json`).then(
+      (response) => response.json(),
+    ).then((booksData) => {
+      setBooks(booksData);
+    }).catch(
+      (err) => {
+        console.log(err, ' error');
+      },
+    );
+  }, []);
 
   return <GoodreadsBooks bookList={books} shelf="currentlyReading" />;
 }
@@ -25,15 +27,17 @@ function GoodreadsCurrentlyReading() {
 function GoodreadsRead() {
   const [books, setBooks] = useState([]);
 
-  fetch(`${bucketHost}/goodreads-read.json`).then(
-    (response) => response.json(),
-  ).then((booksData) => {
-    setBooks(booksData);
-  }).catch(
-    (err) => {
-      console.log(err, ' error');
-    },
-  );
+  useEffect(() => {
+    fetch(`${bucketHost}/goodreads-read.json`).then(
+      (response) => response.json(),
+    ).then((booksData) => {
+      setBooks(booksData);
+    }).catch(
+      (err) => {
+        console.log(err, ' error');
+      },
+    );
+  }, []);
 
   return <GoodreadsBooks bookList={books} shelf="read" />;
 }
@@ -41,15 +45,17 @@ function GoodreadsRead() {
 function Instapaper() {
   const [articles, setArticles] = useState([]);
 
-  fetch(`${bucketHost}/instapaper.json`).then(
-    (response) => response.json(),
-  ).then((articlesData) => {
-    setArticles(articlesData);
-  }).catch(
-    (err) => {
-      console.log(err, ' error');
-    },
-  );
+  useEffect(() => {
+    fetch(`${bucketHost}/instapaper.json`).then(
+      (response) => response.json(),
+    ).then((articlesData) => {
+      setArticles(articlesData);
+    }).catch(
+      (err) => {
+        console.log(err, ' error');
+      },
+    );
+  }, []);
 
   return <InstapaperArticles articleList={articles} />;
 }
@@ -57,15 +63,17 @@ function Instapaper() {
 function Letterboxd() {
   const [films, setFilms] = useState([]);
 
-  fetch(`${bucketHost}/letterboxd.json`).then(
-    (response) => response.json(),
-  ).then((filmsData) => {
-    setFilms(filmsData);
-  }).catch(
-    (err) => {
-      console.log(err, ' error');
-    },
-  );
+  useEffect(() => {
+    fetch(`${bucketHost}/letterboxd.json`).then(
+      (response) => response.json(),
+    ).then((filmsData) => {
+      setFilms(filmsData);
+    }).catch(
+      (err) => {
+        console.log(err, ' error');
+      },
+    );
+  }, []);
 
   return <LetterboxdFilms filmList={films} />;
 }
