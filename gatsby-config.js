@@ -44,9 +44,6 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: ['.md', '.mdx'],
-        defaultLayouts: {
-          default: require.resolve('./src/components/Layout.jsx'),
-        },
         gatsbyRemarkPlugins: [
           { resolve: 'gatsby-remark-autolink-headers' },
           { resolve: 'gatsby-remark-prismjs', options: {} },
@@ -55,7 +52,10 @@ module.exports = {
             resolve: 'gatsby-remark-images',
           },
         ],
-        plugins: ['gatsby-remark-images', 'gatsby-plugin-sharp'],
+        mdxOptions: {
+          remarkPlugins: [],
+          rehypePlugins: [],
+        },
       },
     },
   ],

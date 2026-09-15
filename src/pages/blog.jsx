@@ -24,30 +24,22 @@ function BlogPage(props) {
 
 export default BlogPage;
 
-export const query = graphql`
-  query {
-    allMdx(
-      filter: {
-        frontmatter: {
-          publish: {
-            eq: true
-           }
+export const query = graphql`{
+  allMdx(
+    filter: {frontmatter: {publish: {eq: true}}}
+    sort: {frontmatter: {date: DESC}}
+  ) {
+    edges {
+      node {
+        frontmatter {
+          title
+          date
+          excerpt
         }
-      }
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
-      edges {
-        node {
-          frontmatter {
-            title
-            date
-            excerpt
-          }
-          fields {
-            slug
-          }
+        fields {
+          slug
         }
       }
     }
   }
-`;
+}`;
