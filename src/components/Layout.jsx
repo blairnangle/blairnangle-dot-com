@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 import Helmet from 'react-helmet';
 import 'prismjs/themes/prism.css';
+import 'katex/dist/katex.min.css';
 
 import Nav from './Nav';
 import Favicon from './Favicon';

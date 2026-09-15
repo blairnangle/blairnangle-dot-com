@@ -1,4 +1,11 @@
-module.exports = {
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const config = {
   trailingSlash: 'never',
   plugins: [
     {
@@ -54,10 +61,12 @@ module.exports = {
           },
         ],
         mdxOptions: {
-          remarkPlugins: [],
-          rehypePlugins: [],
+          remarkPlugins: [remarkMath],
+          rehypePlugins: [rehypeKatex],
         },
       },
     },
   ],
 };
+
+export default config;
