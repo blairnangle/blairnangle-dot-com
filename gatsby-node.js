@@ -65,9 +65,13 @@ exports.createPages = ({ graphql, actions }) => {
         allMdx {
           edges {
             node {
+              id
               fields {
                 slug
                 type
+              }
+              internal {
+                contentFilePath
               }
             }
           }
@@ -84,9 +88,10 @@ exports.createPages = ({ graphql, actions }) => {
 
         createPage({
           path: node.fields.slug,
-          component: path.resolve(templatePath),
+          component: `${path.resolve(templatePath)}?__contentFilePath=${node.internal.contentFilePath}`,
           context: {
             // Data passed to context is available in page queries as GraphQL variables.
+            id: node.id,
             slug: node.fields.slug,
           },
         });

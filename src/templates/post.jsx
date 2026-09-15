@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { Disqus } from 'gatsby-plugin-disqus';
 
 import Layout from '../components/Layout';
@@ -16,8 +15,8 @@ const StyledPostDate = styled.time`
   text-align: right;
 `;
 
-function PostTemplate({ data }) {
-  const { frontmatter, body } = data.mdx;
+function PostTemplate({ data, children }) {
+  const { frontmatter } = data.mdx;
 
   return (
     <Layout>
@@ -43,7 +42,7 @@ function PostTemplate({ data }) {
         </Helmet>
       )}
       <h1>{frontmatter.title}</h1>
-      <MDXRenderer>{body}</MDXRenderer>
+      {children}
       <StyledPostDate>{frontmatter.date}</StyledPostDate>
       <Disqus
         config={{
@@ -59,14 +58,13 @@ function PostTemplate({ data }) {
 export default PostTemplate;
 
 export const query = graphql`
-  query($slug: String!) {
-    mdx(fields: { slug: { eq: $slug } }) {
+  query($id: String!) {
+    mdx(id: { eq: $id }) {
       frontmatter {
         title
         date
         excerpt
       }
-      body
     }
   }
 `;
