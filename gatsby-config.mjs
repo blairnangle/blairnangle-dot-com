@@ -14,6 +14,16 @@ const config = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-sharp',
     {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          // Only inline Excalidraw-generated SVGs as React components.
+          // Named `*.excalidraw.svg` so this never touches other SVGs.
+          include: /\.excalidraw\.svg$/,
+        },
+      },
+    },
+    {
       resolve: 'gatsby-plugin-manifest',
       options: {
         name: 'Blair Nangle',
