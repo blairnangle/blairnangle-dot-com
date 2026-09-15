@@ -6,48 +6,12 @@ module.exports = {
     },
     'gatsby-transformer-sharp',
     {
-      resolve: 'gatsby-transformer-remark',
+      resolve: 'gatsby-plugin-manifest',
       options: {
-        plugins: [
-          {
-            resolve: 'gatsby-remark-images',
-            options: {
-              maxWidth: 400,
-              quality: 100,
-              withWebp: true,
-            },
-          },
-          {
-            resolve: 'gatsby-plugin-manifest',
-            options: {
-              name: 'Blair Nangle',
-              short_name: 'Blair Nangle',
-              start_url: '/',
-              icon: 'static/favicon.ico',
-            },
-          },
-          {
-            resolve: 'gatsby-remark-autolink-headers',
-          },
-          {
-            resolve: 'gatsby-remark-prismjs',
-          },
-          {
-            resolve: 'gatsby-remark-smartypants',
-          },
-          {
-            resolve: 'gatsby-remark-copy-linked-files',
-            options: {
-              ignoreFileExtensions: [],
-            },
-          },
-          {
-            resolve: 'gatsby-plugin-disqus',
-            options: {
-              shortname: 'blairnangle-dot-com',
-            },
-          },
-        ],
+        name: 'Blair Nangle',
+        short_name: 'Blair Nangle',
+        start_url: '/',
+        icon: 'static/favicon.ico',
       },
     },
     {
@@ -92,12 +56,6 @@ module.exports = {
           },
         ],
         plugins: ['gatsby-remark-images', 'gatsby-plugin-sharp'],
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-google-analytics',
-      options: {
-        trackingId: 'UA-124521773-1',
       },
     },
   ],
