@@ -76,11 +76,16 @@ exports.createPages = ({ graphql, actions }) => {
             }
           }
         }
+        allDirectory(filter: { sourceInstanceName: { eq: "pics" } }) {
+          nodes {
+            relativePath
+          }
+        }
       }
     `).then((result) => {
       if (result.errors) {
         console.error(result.errors);
-        reject(result.errors);
+        return reject(result.errors);
       }
 
       result.data.allMdx.edges.forEach(({ node }) => {
@@ -96,6 +101,19 @@ exports.createPages = ({ graphql, actions }) => {
           },
         });
       });
+
+      const years = result.data.allDirectory.nodes
+        .map(({ relativePath }) => relativePath)
+        .filter((relativePath) => /^\d{4}$/.test(relativePath));
+
+      years.forEach((year) => {
+        createPage({
+          path: `/pics/${year}`,
+          component: path.resolve('./src/templates/pic-year.jsx'),
+          context: { year },
+        });
+      });
+
       resolve();
     });
   });

@@ -97,6 +97,11 @@ function Nav() {
           </NavItem>
         </ListElement>
         <ListElement>
+          <NavItem to="/pics" activeClassName={activeClassName} partiallyActive>
+            pics
+          </NavItem>
+        </ListElement>
+        <ListElement>
           <NavItem to="/diet" activeClassName={activeClassName}>
             diet
           </NavItem>

@@ -2,4 +2,4 @@
 
 ./build.sh
 
-gatsby serve
+npm exec gatsby serve --verbose

@@ -47,6 +47,13 @@ const config = {
       },
     },
     {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'pics',
+        path: `${__dirname}/src/content/pics`,
+      },
+    },
+    {
       resolve: 'gatsby-plugin-nprogress',
       options: {
         color: '#0000ff',
