@@ -57,7 +57,7 @@ async function main() {
         elements: sceneData.elements || [],
         appState: {
           ...(sceneData.appState || {}),
-          exportBackground: true,
+          exportBackground: false,
           exportWithDarkMode: false,
         },
         files: sceneData.files || null,

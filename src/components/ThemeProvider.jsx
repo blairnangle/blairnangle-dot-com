@@ -14,15 +14,16 @@ const ThemeToggleContext = createContext({
 
 export const useThemeToggle = () => useContext(ThemeToggleContext);
 
-// Read the theme the anti-FOUC script already resolved and wrote to <html>.
-// Falls back to system preference, then light, when running without that
-// script (e.g. during SSR).
-function readInitialThemeName() {
-  if (typeof document !== 'undefined') {
-    const fromAttr = document.documentElement.getAttribute('data-theme');
-    if (fromAttr === 'light' || fromAttr === 'dark') {
-      return fromAttr;
+// Resolve the preferred theme after hydration. The initial state must stay
+// deterministic so the server and browser render the same markup.
+function readPreferredThemeName() {
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored === 'light' || stored === 'dark') {
+      return stored;
     }
+  } catch (e) {
+    // Ignore storage failures (private mode, disabled, etc.).
   }
 
   if (typeof window !== 'undefined' && window.matchMedia) {
@@ -35,7 +36,13 @@ function readInitialThemeName() {
 }
 
 function ThemeProvider({ children }) {
-  const [themeName, setThemeName] = useState(readInitialThemeName);
+  const [themeName, setThemeName] = useState('light');
+
+  // Apply the saved/system preference after the first render, which keeps SSR
+  // and hydration consistent while the anti-FOUC script handles first paint.
+  useEffect(() => {
+    setThemeName(readPreferredThemeName());
+  }, []);
 
   // Keep <html data-theme> and localStorage in sync with React state.
   useEffect(() => {
