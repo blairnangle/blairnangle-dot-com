@@ -62,11 +62,11 @@ const ListElement = styled.li`
 const NavItem = styled(Link).attrs({
   activeClassName,
 })`
-  color: black;
+  color: ${({ theme }) => theme.text};
   border: none;
 
   &:hover {
-    color: blue;
+    color: ${({ theme }) => theme.link};
   }
 
   &:before {

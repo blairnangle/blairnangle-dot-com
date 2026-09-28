@@ -7,6 +7,7 @@ import 'katex/dist/katex.min.css';
 
 import Nav from './Nav';
 import Favicon from './Favicon';
+import ThemeToggle from './ThemeToggle';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -26,6 +27,12 @@ const Main = styled.main`
 
 const StyledHeader = styled.header``;
 
+const TitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const StyledTitle = styled.h1`
   margin: 0.3em 0;
 
@@ -39,12 +46,12 @@ const StyledTitle = styled.h1`
 `;
 
 const TitleLink = styled(Link)`
-  color: #000;
+  color: ${({ theme }) => theme.titleText};
   text-decoration: none;
   border: none;
 
   &:hover {
-    color: #0000ff;
+    color: ${({ theme }) => theme.link};
   }
 `;
 
@@ -65,9 +72,12 @@ function Layout({ children }) {
         <meta property="og:url" content="https://blairnangle.com" />
       </Helmet>
       <StyledHeader>
-        <StyledTitle>
-          <TitleLink to="/">Blair Nangle</TitleLink>
-        </StyledTitle>
+        <TitleRow>
+          <StyledTitle>
+            <TitleLink to="/">Blair Nangle</TitleLink>
+          </StyledTitle>
+          <ThemeToggle />
+        </TitleRow>
         <Nav />
       </StyledHeader>
       {children}

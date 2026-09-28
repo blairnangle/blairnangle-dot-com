@@ -4,7 +4,7 @@ import { Link } from 'gatsby';
 
 const DateSpan = styled.span`
   display: none;
-  color: #999;
+  color: ${({ theme }) => theme.muted};
   margin-left: 0.5em;
 
   @media (min-width: 520px) {

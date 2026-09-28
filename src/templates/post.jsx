@@ -7,7 +7,7 @@ import { Disqus } from 'gatsby-plugin-disqus';
 import Layout from '../components/Layout';
 
 const StyledPostDate = styled.time`
-  color: #999;
+  color: ${({ theme }) => theme.muted};
   font-weight: 400;
   display: block;
   margin-top: 1em;

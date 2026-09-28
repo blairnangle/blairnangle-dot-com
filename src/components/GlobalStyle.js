@@ -1,6 +1,8 @@
 import normalize from 'styled-normalize';
 import { createGlobalStyle } from 'styled-components';
 
+import { light, dark } from '../theme';
+
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   html, body {
@@ -17,6 +19,24 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     font-family: 'Bitter', monospace;
     word-break: break-word;
+    background: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.text};
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  /*
+   * Base pre-hydration colours driven by the data-theme attribute the SSR
+   * anti-FOUC script sets on <html>. Ensures the first paint has the correct
+   * background before styled-components' ThemeProvider hydrates.
+   */
+  html[data-theme='dark'] body {
+    background: ${dark.background};
+    color: ${dark.text};
+  }
+
+  html[data-theme='light'] body {
+    background: ${light.background};
+    color: ${light.text};
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -60,12 +80,12 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: blue;
+    color: ${({ theme }) => theme.link};
     border-bottom: 2px solid transparent;
 
     &:hover {
-      color: blue;
-      border-color: blue;
+      color: ${({ theme }) => theme.linkHover};
+      border-color: ${({ theme }) => theme.linkHover};
     }
 
     &.anchor {
@@ -175,13 +195,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .gatsby-highlight-code-line {
-    background-color: #feb;
+    background-color: ${({ theme }) => theme.codeHighlightBg};
     display: block;
     margin-right: -1em;
     margin-left: -1em;
     padding-right: 1em;
     padding-left: 0.75em;
-    border-left: 0.25em solid #f99;
+    border-left: 0.25em solid ${({ theme }) => theme.codeHighlightBorder};
   }
 
   .gatsby-resp-image-wrapper {
@@ -189,6 +209,83 @@ const GlobalStyle = createGlobalStyle`
       margin-top: 2em;
       margin-bottom: 2em;
       width: 80%;
+    }
+  }
+
+  /*
+   * Excalidraw diagrams are exported with transparent backgrounds but use dark
+   * strokes/text. In dark mode, render them on a light card so they stay
+   * legible; in light mode the card is transparent (no visible change).
+   */
+  .excalidraw-diagram {
+    display: flex;
+    justify-content: center;
+  }
+
+  .excalidraw-diagram svg {
+    background: ${({ theme }) => theme.diagramCardBg};
+    padding: ${({ theme }) => theme.diagramCardPadding};
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Dark-mode adjustments for Prism (light prism.css is imported globally). */
+  html[data-theme='dark'] {
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+      background: #2b2b2b;
+      color: #e6e6e6;
+      text-shadow: none;
+    }
+
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #8a8a8a;
+    }
+
+    .token.punctuation {
+      color: #cccccc;
+    }
+
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+      color: #f08d8d;
+    }
+
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+      color: #a5d6a7;
+    }
+
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+      color: #ddbb88;
+    }
+
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+      color: #8ab4ff;
+    }
+
+    .token.function,
+    .token.class-name {
+      color: #f0c674;
     }
   }
 `;
