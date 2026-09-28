@@ -232,7 +232,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* Dark-mode adjustments for Prism (light prism.css is imported globally). */
   html[data-theme='dark'] {
-    :not(pre) > code[class*="language-"],
+    code[class*="language-"],
     pre[class*="language-"] {
       background: #2b2b2b;
       color: #e6e6e6;
@@ -275,6 +275,12 @@ const GlobalStyle = createGlobalStyle`
     .language-css .token.string,
     .style .token.string {
       color: #ddbb88;
+    }
+
+    .token.operator,
+    .token.entity,
+    .token.url {
+      background: transparent;
     }
 
     .token.atrule,
